@@ -1,0 +1,16 @@
+ctmc
+    up3 : {up}, up2 : {up}, up1 : {down}, up0 : {down},
+    down : {down}
+begin
+
+    up3 -> { up2: 0.03, down: 0.001};
+    up2 -> { up1: 0.02, up3 : 1, down: 0.001};
+    up1 -> { up0: 0.01, up2 : 1, down: 0.001 };
+    up0 -> { up1: 1 , down: 0.001 };
+    down -> { up3 : 0.2 };
+
+    spec csl1 : S(up) = ?;
+    spec csl2 : P( up U'[5] down) = ?;
+    spec csl3 : P(up U'[7.5] ~true) =?;
+    spec csl4 : P( true U'[5] down) < 0.01;
+end

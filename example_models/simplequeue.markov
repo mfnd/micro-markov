@@ -1,0 +1,14 @@
+ctmc
+    s0 : {empty}, s1, s2, s3 : {full}
+begin
+
+    s0 -> { s1 : 1.5 };
+    s1 -> { s0 : 3 , s2 : 1.5 };
+    s2 -> { s1 : 3 , s3 : 1.5 };
+    s3 -> { s2 : 3 };
+
+    spec csl1 : S(P( true U'[7.5] full) > 0.65) > 0.45;
+    spec csl2 : S( full ) < 0.1;
+    spec full_steady : S(full) = ?;
+
+end

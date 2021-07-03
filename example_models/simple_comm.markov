@@ -1,0 +1,15 @@
+dtmc
+    start, try, lost, delivered : {delivered}
+
+begin
+
+    start -> try;
+    try -> { lost : 0.1, delivered : 0.9};
+    lost -> try;
+    delivered -> start;
+
+    spec eventually_delivered :
+                P(true U delivered) = ?;
+    spec delivered_3_steps :
+                P( true U[3] delivered) = ?;
+end

@@ -1,0 +1,20 @@
+dtmc
+    s0, s1, s2, s3, s4, s5, s6,
+    d1 : { d1, finished }, d2 : { d2, finished}, d3 : { d3, finished }, d4 : { d4, finished }, d5 : {d5, finished}, d6 : {d6, finished}
+begin
+
+    s0 -> { s1 : 0.5 , s2 : 0.5 };
+    s1 -> { s3 : 0.5 , s4 : 0.5 };
+    s2 -> { s5 : 0.5 , s6 : 0.5 };
+    s3 -> { s1 : 0.5 , d1 : 0.5 };
+    s4 -> { d2 : 0.5 , d3 : 0.5 };
+    s5 -> { d4 : 0.5 , d5 : 0.5 };
+    s6 -> { s2 : 0.5 , d6 : 0.5 };
+
+    spec d6_prob : P(true U P( true U d6) < 0.2) > 0 & P(true U d6) > 0.15;
+    spec d6_5steps : P(true U[5] d6) = ?;
+    spec even : P(true U ~(~d2 & ~d4 & ~d6)) = ?;
+    spec finish_4steps : P(true U[4] finished) = ?;
+    spec d6_prob_calc : P(true U d6) = ?;
+
+end
